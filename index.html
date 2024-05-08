@@ -1,48 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AmazeAI API Documentation</title>
-    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>問券調查</title>
+    <link rel="canonical" href="https://www.letswrite.tw/custom-google-form/" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    />
+
+    <!-- customized style -->
     <style>
-      li[data-item-id="tag/API"] {
-        display: none;
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        font-size: 16px;
       }
-      div[id^="tag/API"] {
-        display: none;
+      html,
+      body,
+      .container,
+      .row {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .container {
+        max-width: 100%;
+      }
+      button {
+        font-size: 16px;
+      }
+
+      .half {
+        position: fixed;
+        margin: 0;
+        width: 50% !important;
+        height: 100%;
+      }
+      .bg {
+        background: url("https://fakeimg.pl/1920x1024/?text=KV") center center;
+        background-size: cover;
+      }
+      .form {
+        left: 50%;
+        overflow: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      h1,
+      form {
+        width: 100%;
+      }
+      h1 {
+        padding-top: 16px;
+        text-align: center;
+      }
+      form {
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 400px;
+      }
+      .input-group {
+        margin-bottom: 30px;
+      }
+      .radio-group label {
+        display: inline-block;
+      }
+      textarea {
+        min-height: 100px;
+      }
+
+      @media screen and (max-width: 1024px) {
+        .half {
+          position: static;
+          width: 100% !important;
+          height: auto;
+        }
+        .bg {
+          height: 30vh;
+        }
+        form {
+          padding-right: 12px;
+          padding-left: 12px;
+        }
       }
     </style>
+
+    <link
+      rel="shortcut icon"
+      href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png"
+    />
+
+    <!-- Google Tag Manager-->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PGQ9WQT");
+    </script>
   </head>
   <body>
-    <redoc id="redoc-container"></redoc>
+    <!-- Google Tag Manager (noscript)-->
+    <noscript>
+      <iframe
+        src="https://ai-amaze.com/"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe>
+    </noscript>
 
+    <div class="container">
+      <main class="row">
+        <!-- bg -->
+        <section class="six columns half bg"></section>
+
+        <!-- form -->
+        <section class="six columns half form">
+          <h1>問券調查範例</h1>
+          <form
+            onsubmit="sent_redirect=true"
+            target="iframe_redirect"
+            class=""
+            action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScKhvNi2k0dgQ5kDypUWnNGlWcTRIGu2o6f4oV3tNGzk1WKpA/formResponse"
+            method="post"
+          >
+            <!-- 詢問類別 -->
+            <div class="input-group">
+              <label for="demo_select">滿意度調查</label>
+              <select class="u-full-width" id="demo_select">
+                <option value="0" value="0" selected disabled>請選擇</option>
+                <option value="選項1">1</option>
+                <option value="選項2">2</option>
+                <option value="選項3">3</option>
+              </select>
+            </div>
+
+            <button
+              type="button"
+              id="submit"
+              class="button-primary u-full-width"
+            >
+              確認送出
+            </button>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
-      window.onload = function () {
-        fetchFilteredSwagger()
-          .then(function (filteredSwagger) {
-            Redoc.init(
-              (specUrl = "/docs/filtered-swagger"),
-              (options = {}),
-              (redocContainer = document.getElementById("redoc-container")),
-              (onLoaded = function () {}),
-              (onError = function () {}),
-              (swagger = filteredSwagger)
-            );
-          })
-          .catch(function (error) {
-            console.error("Failed to fetch filtered Swagger data:", error);
-          });
-      };
+      $(function () {
+        $("#submit").on("click", function () {
+          // 類別
+          var cat = $("#demo_select").val() || "未填寫";
 
-      function fetchFilteredSwagger() {
-        return fetch("/docs/filtered-swagger").then(function (response) {
-          if (!response.ok) {
-            throw new Error("Failed to fetch filtered Swagger data");
-          }
-          return response.json();
+          console.log(cat);
+          // post
+          var data = {
+            "entry.162326203_sentinel": cat,
+          };
+          var redirectURL = "https://ai-amaze.com/";
+          var formUrl =
+            "https://docs.google.com/forms/u/0/d/e/1FAIpQLScKhvNi2k0dgQ5kDypUWnNGlWcTRIGu2o6f4oV3tNGzk1WKpA/formResponse";
+          $.ajax({
+            type: "POST",
+            url: formUrl,
+            data: data,
+            contentType: "application/json",
+            dataType: "jsonp",
+            success: function () {
+              alert("表單提交成功！");
+              window.location.href = redirectURL;
+            },
+            error: function (xhr, status, error) {
+              // 顯示提交失敗的原因
+              alert("表單提交失敗！原因：" + error);
+            },
+          });
         });
-      }
+      });
     </script>
   </body>
 </html>
