@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AmazeAI API Documentation</title>
+    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+    <style>
+      li[data-item-id="tag/API"] {
+        display: none;
+      }
+      div[id^="tag/API"] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <redoc id="redoc-container"></redoc>
+
+    <script>
+      window.onload = function () {
+        fetchFilteredSwagger()
+          .then(function (filteredSwagger) {
+            Redoc.init(
+              (specUrl = "/docs/filtered-swagger"),
+              (options = {}),
+              (redocContainer = document.getElementById("redoc-container")),
+              (onLoaded = function () {}),
+              (onError = function () {}),
+              (swagger = filteredSwagger)
+            );
+          })
+          .catch(function (error) {
+            console.error("Failed to fetch filtered Swagger data:", error);
+          });
+      };
+
+      function fetchFilteredSwagger() {
+        return fetch("/docs/filtered-swagger").then(function (response) {
+          if (!response.ok) {
+            throw new Error("Failed to fetch filtered Swagger data");
+          }
+          return response.json();
+        });
+      }
+    </script>
+  </body>
+</html>
