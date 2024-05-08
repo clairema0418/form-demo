@@ -126,10 +126,10 @@
     <div class="container">
       <main class="row">
         <!-- bg -->
-        <section class="six columns half bg"></section>
+        <!-- <section class="six columns half bg"></section> -->
 
         <!-- form -->
-        <section class="six columns half form">
+        <section class="form">
           <h1>問券調查範例</h1>
           <form
             onsubmit="sent_redirect=true"
@@ -189,6 +189,7 @@
             error: function (xhr, status, error) {
               // 顯示提交失敗的原因
               alert("表單提交失敗！原因：" + error);
+              window.location.href = redirectURL;
             },
           });
         });
