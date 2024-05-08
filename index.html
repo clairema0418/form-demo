@@ -171,11 +171,11 @@
           console.log(cat);
           // post
           var data = {
-            "entry.162326203_sentinel": cat,
+            "entry.162326203": cat,
           };
           var redirectURL = "https://ai-amaze.com/";
           var formUrl =
-            "https://docs.google.com/forms/u/0/d/e/1FAIpQLScKhvNi2k0dgQ5kDypUWnNGlWcTRIGu2o6f4oV3tNGzk1WKpA/formResponse";
+            "https://docs.google.com/forms/d/e/1FAIpQLScKhvNi2k0dgQ5kDypUWnNGlWcTRIGu2o6f4oV3tNGzk1WKpA/formResponse";
           $.ajax({
             type: "POST",
             url: formUrl,
@@ -187,7 +187,6 @@
               window.location.href = redirectURL;
             },
             error: function (xhr, status, error) {
-              // 顯示提交失敗的原因
               alert("表單提交失敗！原因：" + error);
               window.location.href = redirectURL;
             },
